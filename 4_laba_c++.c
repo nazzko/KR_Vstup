@@ -1,11 +1,11 @@
+/*Програма для розрахунку деяких площі та  об'єму фігур:
+конуса, паралелепіпеда, куба, сфери, еліпсоїда та циліндра*/
+
 #include <iostream>
 #include <cmath>
-
-
 using namespace std;
 
-
-class Prostorowi
+class Spatial_figures
 {
 public:
     virtual double Square()
@@ -16,13 +16,13 @@ public:
     {
         return 0;
     }
-    virtual double Extend()
-		{
-			return 0;
-		}
+    virtual double Volume()
+	{
+		return 0;
+	}
 };
    
-    class Pryamokytni : public Prostorowi
+    class Rectangular : public Spatial_figures
 	{
 	public:
 		virtual double Square() 
@@ -33,30 +33,29 @@ public:
 		{
 			return 0;
 		}
-		virtual double Extend()
+		virtual double Volume()
 		{
 			return 0;
 		}
-
 	};
 	
-	
-		class Cylinder : public Pryamokytni
+		class Cylinder : public Rectangular
         {
         public:
             int Get()
             {
-                cout << "Vvedu radius: ";
+                cout << "Введiть радiус основи: ";
                 cin >> r;
-                cout << "Vvedu vusoty: ";
+                cout << "Введiть висоту : ";
                 cin >> h;
                 return 0;
             }
+            //Знаходження площі та об'єму Циліндра
             double Square()
             {
                 return 3.14*r*r;
             }
-            double Extend()
+            double Volume()
             {
                 return 3.14*r*r*h;
             }
@@ -64,21 +63,21 @@ public:
             int r, h;
         };
         
-        class Cube : public Pryamokytni
+        class Cube : public Rectangular
 		{
-			
 		public:
             int Get()
             {
-                cout << "Vvedu storonu : ";
+                cout << "Введiть сторону : ";
                 cin >> a;
                 return 0;
             }
+            //Знаходження площі та об'єму Куба
             double Square()
             {
                 return  6*a*a;
             }
-            double Extend()
+            double Volume()
             {
                 return a*a*a;
             }
@@ -86,25 +85,25 @@ public:
             int a;
         };
         
-        class Paralelepiped : public Pryamokytni
+        class Paralelepiped : public Rectangular
 		{
-			
 		public:
             int Get()
             {
-                cout << "Vvedu storonu a: ";
+                cout << "Введiть сторону a: ";
                 cin >> a;
-                cout << "Vvedu storonu b: ";
+                cout << "Введiть сторону b: ";
                 cin >> b;
-                cout << "Vvedu storonu c: ";
+                cout << "Введiть сторону c: ";
                 cin >> c;
                 return 0;
             }
+            //Знаходження площі та об'єму Паралелепіпеда
             double Square()
             {
                 return  2*(a*b+b*c+a*c);
             }
-            double Extend()
+            double Volume()
             {
                 return a*b*c;
             }
@@ -114,7 +113,7 @@ public:
 
 
 
-    class Sferuchni : public Prostorowi
+    class Spherical : public Spatial_figures
     {
     public:
         virtual int Get()
@@ -125,30 +124,30 @@ public:
         {
             return 0;
         }
-        virtual double Extend()
+        virtual double Volume()
         {
             return 0;
         }
     };
 
 
-		class Cone : public Sferuchni
+		class Cone : public Spherical
         {
-        	
         public:
             int Get()
             {
-                cout << "Vvedu radius: ";
+                cout << "Введiть радiус основи: ";
                 cin >> r;
-                cout << "Vvedu vusoty: ";
+                cout << "Введiть висоту: ";
                 cin >> h;
                 return 0;
             }
+            //Знаходження площі та об'єму Конуса
             double Square()
             {
                 return 3.14*r*r;
             }
-            double Extend()
+            double Volume()
             {
                 return 3.14/3*r*r*h;
             }
@@ -157,22 +156,21 @@ public:
         };
 		
 				           
-        class Sphere : public Sferuchni
+        class Sphere : public Spherical
         {
         public:
             int Get()
             {
-                cout << "Vvedu radius: ";
+                cout << "Введiть радiус: ";
                 cin >> r;
                 return 0;
             }
+            //Знаходження площі та об'єму Сфери
             double Square()
             {
                 return 4*3.14*r*r;
             }
-
-
-            double Extend()
+            double Volume()
             {
                 return 4 / 3 * 3.14*r*r*r;
             }
@@ -181,24 +179,25 @@ public:
         };
         
         
-        class Elipsoid : public Sferuchni
+        class Elipsoid : public Spherical
         {
 		public:
             int Get()
             {
-                cout << "Vvedu pivvis (radius), a: ";
+                cout << "Введiть пiввiсь (радiус), a: ";
                 cin >> a;
-                cout << "Vvedu pivvis (radius), b: ";
+                cout << "Введiть пiввiсь (радiус), b: ";
                 cin >> b;
-                cout << "Vvedu pivvis (radius), c: ";
+                cout << "Введiть пiввiсь (радiус), c: ";
                 cin >> c;
                 return 0;
         	}
+        	//Знаходження площі та об'єму Елісоїда
             double Square()
             {
                 return 2*3.14*a*(a+pow(b,2)/pow((pow(a,2)-pow(b,2)),1/2)*log((a+pow((pow(a,2)-pow(b,2)),1/2))/b));
             }
-            double Extend()
+            double Volume()
             {
                 return 4/3*3.14*a*b*c;
             }
@@ -208,60 +207,63 @@ public:
 		
 int main()
 {
-    cout << "Vuberu figyry:" << endl;
-    cout << "1. Konus" << endl;
-    cout << "2. Paralelepiped" << endl;
-    cout << "3. Kub" << endl;
-    cout << "4. Sphera" << endl;
-    cout << "5. Elipsoid" << endl;
-    cout << "6. Cylinder" << endl;
+	setlocale(LC_CTYPE, "ukr");
+	
+    cout << "Виберiть фiгуру:" << endl;
+    cout << "1. Конус" << endl;
+    cout << "2. Паралелепiпед" << endl;
+    cout << "3. Куб" << endl;
+    cout << "4. Сфера" << endl;
+    cout << "5. Елiпсоїд" << endl;
+    cout << "6. Цилiндр" << endl;
     int choise;
     cin >> choise;
    
     if (choise == 1)
     {
-        Sferuchni *ptr1 = new Cone;
+    	//створення вказівника на фігуру і надання доступу до методів класу через покажчик 
+        Spherical *ptr1 = new Cone;
         ptr1->Get();
-        cout << "Ploszha = " << (ptr1->Square()) << endl;
-        cout << "Ob'em = " <<(ptr1->Extend()) << endl;
+        cout << "Площа = " << (ptr1->Square()) << endl;
+        cout << "Об'єм = " << (ptr1->Volume()) << endl;
     }
     else if (choise == 2)
     {
-        Pryamokytni *ptr2 = new Paralelepiped;
+        Rectangular *ptr2 = new Paralelepiped;
         ptr2->Get();
-        cout << "Ploszha = " << (ptr2->Square()) << endl;
-        cout << "Ob'em = " << (ptr2->Extend()) << endl;
+        cout << "Площа = " << (ptr2->Square()) << endl;
+        cout << "Об'єм = " << (ptr2->Volume()) << endl;
     }
     else if (choise == 3)
     {
-        Pryamokytni *ptr3 = new Cube;
+        Rectangular *ptr3 = new Cube;
         ptr3->Get();
-        cout << "Ploszha = " << (ptr3->Square()) << endl;
-        cout << "Ob'em = " << (ptr3->Extend())<<endl;
+        cout << "Площа = " << (ptr3->Square()) << endl;
+        cout << "Об'єм = " << (ptr3->Volume()) << endl;
     }
     else if (choise == 4)
     {
-        Sferuchni *ptr4 = new Sphere;
+        Spherical *ptr4 = new Sphere;
         ptr4->Get();
-        cout << "Ploszha = " << (ptr4->Square()) << endl;
-        cout << "Ob'em = " << (ptr4->Extend()) << endl;
+        cout << "Площа = " << (ptr4->Square()) << endl;
+        cout << "Об'єм = " << (ptr4->Volume()) << endl;
     }
     else if (choise == 5)
     {
-        Sferuchni *ptr5 = new Elipsoid;
+        Spherical *ptr5 = new Elipsoid;
         ptr5->Get();
-        cout << "Ploszha = " << (ptr5->Square()) << endl;
-        cout << "Ob'em = " <<(ptr5->Extend()) << endl;
+        cout << "Площа = " << (ptr5->Square()) << endl;
+        cout << "Об'єм = " << (ptr5->Volume()) << endl;
     }
 	else if (choise == 6)
     {
-        Pryamokytni *ptr6 = new Cylinder;
+        Rectangular *ptr6 = new Cylinder;
         ptr6->Get();
-        cout << "Ploszha = " << (ptr6->Square()) << endl;
-        cout << "Ob'em = " << (ptr6->Extend())<<endl;
+        cout << "Площа = " << (ptr6->Square()) << endl;
+        cout << "Об'єм = " << (ptr6->Volume()) << endl;
     }
     else
-        cout << "Nepravulnuj nomer" <<endl;
+        cout << "Неправильний номер. Спробуйте знову." <<endl;
     return 0;
 }
 
